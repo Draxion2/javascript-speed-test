@@ -15,7 +15,7 @@ var questionD = document.getElementById("questionD");
 // config numerials
 var questionIndex = 0;
 var isCorrect = 0;
-var timer = 5;
+var timer = 75;
 var pen = 0;
 
 // config questions
@@ -108,7 +108,6 @@ var gameOver = function() {
     quizTitle.textContent = "Quiz Challenge";
     timer = 0;
     timerDisplay.textContent = timer;
-    alert("GAME OVER");
 }
 
 // run questions
@@ -179,6 +178,12 @@ quizAnswers.addEventListener("click", function(event) {
 
     // answer is correct
     } else {
+
+        // determine if all questions have been answered
+        if (questionIndex === 9) {
+            gameOver();
+            return;
+        }
         result.textContent = "CORRECT!";
         questionIndex++;
         isCorrect++;
