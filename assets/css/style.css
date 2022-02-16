@@ -35,7 +35,7 @@ header {
 /* main start */
 
 main {
-    margin-top: 20px;
+    margin-top: 40px;
 }
 
 .quiz-display {
@@ -82,6 +82,17 @@ main {
     cursor: pointer;
     background: #000;
     color: #fff;
+}
+
+.results {
+    border-top: 1px solid #000;
+    padding-top: 10px;
+    width: 100%;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 20px;
+    margin-top: 20px;
+    text-align: center;
 }
 
 /* main end */

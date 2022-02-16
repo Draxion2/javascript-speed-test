@@ -3,28 +3,64 @@ var highScoresLink = document.querySelector(".high-scores");
 var quizAnswers = document.querySelector(".quiz-answers");
 var quizSummary = document.querySelector(".quiz-summary");
 var quizTitle = document.querySelector(".quiz-title");
+var result = document.querySelector(".results");
 var startBtn = document.getElementById("start-btn");
 var timerDisplay = document.getElementById("timer");
+var questionA = document.getElementById("questionA");
+var questionB = document.getElementById("questionB");
+var questionC = document.getElementById("questionC");
+var questionD = document.getElementById("questionD");
+
+// config numerials
+var questionIndex = 0;
+var isCorrect = 0;
 var timer = 75;
 var pen = 0;
 
 // config questions
 var questions = [{
-    id: 0,
-    q: "Question 1",
-    a: [{ text: "Option 1", isCorrect: false },
-        { text: "Option 2", isCorrect: false },
-        { text: "Option 3", isCorrect: true },
-        { text: "Option 4", isCorrect: false }
+    q: "Inside which HTML element do you put JavaScript?",
+    a: [{ text: "<script>", isCorrect: true },
+        { text: "<code>", isCorrect: false },
+        { text: "<header>", isCorrect: false },
+        { text: "<style>", isCorrect: false }
     ]
-}];
+},
+{
+    q: "Which is the right way to write a comment in JavaScript?",
+    a: [{ text: "<!-- text -->", isCorrect: false },
+        { text: "- text -", isCorrect: false },
+        { text: "// text", isCorrect: true },
+        { text: "...", isCorrect: false }
+    ]
+}
+];
+
+// run questions
+var runQuestions = function() {
+    quizTitle.textContent = questions[questionIndex].q;
+    questionA.textContent = "1. " + questions[questionIndex].a[0].text;
+    questionB.textContent = "2. " + questions[questionIndex].a[1].text;
+    questionC.textContent = "3. " + questions[questionIndex].a[2].text;
+    questionD.textContent = "4. " + questions[questionIndex].a[3].text;
+
+    // config true or false
+    questionA.value = questions[questionIndex].a[0].isCorrect;
+    questionB.value = questions[questionIndex].a[1].isCorrect;
+    questionC.value = questions[questionIndex].a[2].isCorrect;
+    questionD.value = questions[questionIndex].a[3].isCorrect;
+}
 
 
-// questions
+
+
+// start questions
 var startQuestions = function() {
 
     // display timer
     timerDisplay.textContent = timer;
+
+    // start timer
     var countDown = setInterval(function() {
 
         // if count is at 0
@@ -35,6 +71,7 @@ var startQuestions = function() {
             return;
         }
 
+        // determine penalty
         if (pen !== 0) {
             timer = timer - pen;
             if (timer <= 0) {
@@ -53,14 +90,25 @@ var startQuestions = function() {
 
     }, 1000);
 
+    // first question
+    runQuestions();
 }
 
 // wrong answer
 quizAnswers.addEventListener("click", function(event) {
-    var questionClicked = event.target.getAttribute("data-number");
-    if (questionClicked === "1") {
+    var questionClicked = event.target.getAttribute("value");
+
+    // answer is wrong
+    if (questionClicked === "false") {
+        result.textContent = "WRONG!";
         pen = 10;
-        countDown();
+
+    // answer is correct
+    } else {
+        result.textContent = "CORRECT!";
+        questionIndex++;
+        isCorrect++;
+        runQuestions();
     }
 });
 
@@ -72,7 +120,6 @@ startBtn.addEventListener("click", function() {
     quizSummary.style.display = "none";
     this.style.display = "none";
 
-    // display first question
-    quizTitle.textContent = "First Question";
+    // start timer and first questions
     startQuestions();
 })
