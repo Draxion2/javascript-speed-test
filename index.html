@@ -8,13 +8,32 @@
     <title>JavaScript Speed Test</title>
 </head>
 <body>
-    <h1>JavaScript Speed Test</h1>
-    <p>
-        Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!
-    </p>
-    <button>Start Quiz</button>
-    <h3>View high scores</h3>
-    <h3>Time: 0</h3>
+    <header>
+        <div class="high-scores">
+            View High Scores
+        </div>
+        <div class="header-title">
+            <h1>JavaScript Speed Test</h1>
+        </div>
+        <div class="timer-display">
+            Time: <span id="timer">0</span>
+        </div>
+    </header>
+    <main>
+        <div class="quiz-display">
+            <h2 class="quiz-title">Quiz Challenge</h2>
+            <p class="quiz-summary">
+                Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!
+            </p>
+            <div class="quiz-answers">
+                <button data-number="1" class="questions" id="questionA">Question A</button>
+                <button data-number="2" class="questions" id="questionB">Question B</button>
+                <button data-number="3" class="questions" id="questionC">Question C</button>
+                <button data-number="4" class="questions" id="questionD">Question D</button>
+            </div>
+            <button id="start-btn">Start Quiz</button>
+        </div>
+    </main>
     <script type="text/javascript" src="./assets/js/script.js"></script>
 </body>
 </html>
