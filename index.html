@@ -26,11 +26,16 @@
                 Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!
             </p>
             <div class="quiz-answers">
-                <button data-number="1" class="questions" id="questionA"></button>
-                <button data-number="2" class="questions" id="questionB"></button>
-                <button data-number="3" class="questions" id="questionC"></button>
-                <button data-number="4" class="questions" id="questionD"></button>
+                <button class="questions" id="questionA"></button>
+                <button class="questions" id="questionB"></button>
+                <button class="questions" id="questionC"></button>
+                <button class="questions" id="questionD"></button>
             </div>
+            <form id="high-score-form">
+                <label for="high-score">Enter Initials:</label>
+                <input type="text" for="high-score" id="high-score">
+                <input type="submit" id="submit-score" value="Submit">
+            </form>
             <button id="start-btn">Start Quiz</button>
             <div class="results"></div>
         </div>

@@ -11,6 +11,9 @@ var questionA = document.getElementById("questionA");
 var questionB = document.getElementById("questionB");
 var questionC = document.getElementById("questionC");
 var questionD = document.getElementById("questionD");
+var submitForm = document.getElementById("high-score-form");
+var highScoreInput = document.getElementById("high-score");
+var submitScoreBtn = document.getElementById("submit-score");
 
 // config numerials
 var questionIndex = 0;
@@ -25,6 +28,38 @@ var questions = [{
         { text: "<code>", isCorrect: false },
         { text: "<header>", isCorrect: false },
         { text: "<style>", isCorrect: false }
+    ]
+},
+{
+    q: "What is a JavaScript variable?",
+    a: [{ text: "An operator", isCorrect: false },
+        { text: "A way to store data values", isCorrect: true },
+        { text: "a function", isCorrect: false },
+        { text: "A variable doesn't mean anything", isCorrect: false }
+    ]
+},
+{
+    q: "What company developed JavaScript?",
+    a: [{ text: "Netscape", isCorrect: true },
+        { text: "World Wide Web", isCorrect: false },
+        { text: "JavaScript wasn't created", isCorrect: false },
+        { text: "Apple", isCorrect: false }
+    ]
+},
+{
+    q: "What does the 'this' keyword mean?",
+    a: [{ text: "A variable", isCorrect: false },
+        { text: "A function", isCorrect: false },
+        { text: "It puts code into a comment", isCorrect: false },
+        { text: "Refers to the object being called", isCorrect: true }
+    ]
+},
+{
+    q: "What does the method 'for()' mean?",
+    a: [{ text: "A way for looping structures", isCorrect: true },
+        { text: "A variable", isCorrect: false },
+        { text: "A javaScript operator", isCorrect: false },
+        { text: "An object", isCorrect: false }
     ]
 },
 {
@@ -57,6 +92,14 @@ var questions = [{
         { text: "A function", isCorrect: false },
         { text: "A value that represents Not-a-Number", isCorrect: true },
         { text: "A negative integer", isCorrect: false }
+    ]
+},
+{
+    q: "Which method do you use to covert a string into an integer?",
+    a: [{ text: "console.log()", isCorrect: false },
+        { text: "parseInt()", isCorrect: true },
+        { text: "appendChild()", isCorrect: false },
+        { text: "on()", isCorrect: false }
     ]
 },
 {
@@ -100,15 +143,30 @@ var questions = [{
     ]
 }];
 
-var gameOver = function() {
-    // show summary and start button
-    quizAnswers.style.display = "none";
-    quizSummary.style.display = "block";
-    startBtn.style.display = "block";
-    quizTitle.textContent = "Quiz Challenge";
+var ending = function() {
+
+    // end timer
     timer = 0;
     timerDisplay.textContent = timer;
+
+    // change to ending page
+    quizTitle.textContent = "Quiz Completed!";
+    quizSummary.textContent = "Your final score is " + isCorrect + ".";
+    quizAnswers.style.display = "none";
+    startBtn.style.display = "none";
+    submitForm.style.display = "block";
 }
+
+ending();
+
+// submit high score
+submitScoreBtn.addEventListener("click", function(event) {
+    event.preventDefault();
+
+    // store input & player initials
+    var initials = highScoreInput.value;
+    localStorage.setItem(initials, isCorrect);
+})
 
 // run questions
 var runQuestions = function() {
@@ -125,9 +183,6 @@ var runQuestions = function() {
     questionD.value = questions[questionIndex].a[3].isCorrect;
 }
 
-
-
-
 // start questions
 var startQuestions = function() {
 
@@ -140,7 +195,7 @@ var startQuestions = function() {
         // if count is at 0
         if (timer <= 0) {
             clearInterval(countDown);
-            gameOver();
+            ending();
             return;
         }
 
@@ -149,7 +204,7 @@ var startQuestions = function() {
             timer = timer - pen;
             if (timer <= 0) {
                 clearInterval(countDown);
-                gameOver();
+                ending();
                 return;
             }
             timerDisplay.textContent = timer;
@@ -180,8 +235,8 @@ quizAnswers.addEventListener("click", function(event) {
     } else {
 
         // determine if all questions have been answered
-        if (questionIndex === 9) {
-            gameOver();
+        if (questionIndex === questions.length - 1) {
+            ending();
             return;
         }
         result.textContent = "CORRECT!";
@@ -193,6 +248,9 @@ quizAnswers.addEventListener("click", function(event) {
 
 // user starts the quiz
 startBtn.addEventListener("click", function() {
+
+    // restart score
+    isCorrect = 0;
 
     // hide summary and start button
     quizAnswers.style.display = "block";

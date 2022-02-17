@@ -13,7 +13,6 @@ body {
 }
 
 /* header start */
-
 header {
     background: var(--primary);
     height: 70px;
@@ -29,11 +28,9 @@ header {
     line-height: 80px;
     font-weight: bold;
 }
-
 /* header end */
 
 /* main start */
-
 main {
     margin-top: 40px;
 }
@@ -95,5 +92,35 @@ main {
     text-align: center;
     color: #8e8e8e;
 }
-
 /* main end */
+
+/* ending start */
+#high-score-form {
+    margin: 0 auto;
+    width: 100%;
+    display: none;
+}
+
+.quiz-display label {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#submit-score {
+    padding: 5px 20px;
+    background: var(--secondary);
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+#high-score {
+    height: 20px;
+    width: 30%;
+}
+
+#submit-score:hover {
+    cursor: pointer;
+    background: #000;
+    color: #fff;
+}
+/* ending end */
