@@ -148,6 +148,7 @@ var ending = function() {
     // end timer
     timer = 0;
     timerDisplay.textContent = timer;
+    isCorrect = 25;
 
     // change to ending page
     quizTitle.textContent = "Quiz Completed!";
@@ -165,7 +166,7 @@ submitScoreBtn.addEventListener("click", function(event) {
 
     // store input & player initials
     var initials = highScoreInput.value;
-    localStorage.setItem(initials, isCorrect);
+    sessionStorage.setItem(initials, isCorrect);
 })
 
 // run questions
