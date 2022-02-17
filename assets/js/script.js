@@ -21,6 +21,7 @@ var questionIndex = 0;
 var isCorrect = 0;
 var timer = 75;
 var pen = 0;
+var rank = 1;
 
 // config question
 var questions = [{
@@ -158,21 +159,32 @@ var ending = function() {
     submitForm.style.display = "block";
 }
 
-ending();
-
 var loadHighScores = function() {
 
     // change to high scores
     header.style.display = "none";
     quizTitle.textContent = "High Scores";
+    quizSummary.textContent = "";
     submitForm.style.display = "none";
+    startBtn.style.display = "none";
     result.style.border = "none";
 
     // load high scores
     for (var i = 0; i < localStorage.length;i++) {
-        console.log(JSON.parse(localStorage.getItem("users_" + i)));
+        var key = localStorage.key(i);
+        var score = JSON.parse(localStorage.getItem(key));
+        var scoreboard = '<div class="scores">' + rank + ". " + score.init + ' - ' + score.score + '</div>';
+        rank++;
+        quizSummary.innerHTML += scoreboard;
     }
 }
+
+// when user wants to see high scores
+highScoresLink.addEventListener("click", function() {
+
+    // load high scores
+    loadHighScores();
+});
 
 // submit high score
 submitScoreBtn.addEventListener("click", function(event) {

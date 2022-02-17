@@ -28,6 +28,10 @@ header {
     line-height: 80px;
     font-weight: bold;
 }
+
+.high-scores:hover {
+    cursor: pointer;
+}
 /* header end */
 
 /* main start */
