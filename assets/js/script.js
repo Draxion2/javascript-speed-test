@@ -1,4 +1,5 @@
 // config variables
+var header = document.querySelector("header");
 var highScoresLink = document.querySelector(".high-scores");
 var quizAnswers = document.querySelector(".quiz-answers");
 var quizSummary = document.querySelector(".quiz-summary");
@@ -21,7 +22,7 @@ var isCorrect = 0;
 var timer = 75;
 var pen = 0;
 
-// config questions
+// config question
 var questions = [{
     q: "Inside which HTML element do you put JavaScript?",
     a: [{ text: "<script>", isCorrect: true },
@@ -148,7 +149,6 @@ var ending = function() {
     // end timer
     timer = 0;
     timerDisplay.textContent = timer;
-    isCorrect = 25;
 
     // change to ending page
     quizTitle.textContent = "Quiz Completed!";
@@ -160,13 +160,35 @@ var ending = function() {
 
 ending();
 
+var loadHighScores = function() {
+
+    // change to high scores
+    header.style.display = "none";
+    quizTitle.textContent = "High Scores";
+    submitForm.style.display = "none";
+    result.style.border = "none";
+
+    // load high scores
+    for (var i = 0; i < localStorage.length;i++) {
+        console.log(JSON.parse(localStorage.getItem("users_" + i)));
+    }
+}
+
 // submit high score
 submitScoreBtn.addEventListener("click", function(event) {
     event.preventDefault();
 
     // store input & player initials
-    var initials = highScoreInput.value;
-    sessionStorage.setItem(initials, isCorrect);
+    var user = {
+        init: highScoreInput.value,
+        score: isCorrect
+    }
+
+    // save data to browser
+    localStorage.setItem("users_" + localStorage.length, JSON.stringify(user));
+
+    // load high scores
+    loadHighScores();
 })
 
 // run questions
