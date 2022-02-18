@@ -23,6 +23,9 @@ var timer = 75;
 var pen = 0;
 var rank = 1;
 
+// config high scores
+var highScores = [];
+
 // config question
 var questions = [{
     q: "Inside which HTML element do you put JavaScript?",
@@ -161,22 +164,13 @@ var ending = function() {
 
 var loadHighScores = function() {
 
-    // change to high scores
+    // change to high scores page
     header.style.display = "none";
     quizTitle.textContent = "High Scores";
     quizSummary.textContent = "";
     submitForm.style.display = "none";
     startBtn.style.display = "none";
     result.style.border = "none";
-
-    // load high scores
-    for (var i = 0; i < localStorage.length;i++) {
-        var key = localStorage.key(i);
-        var score = JSON.parse(localStorage.getItem(key));
-        var scoreboard = '<div class="scores">' + rank + ". " + score.init + ' - ' + score.score + '</div>';
-        rank++;
-        quizSummary.innerHTML += scoreboard;
-    }
 }
 
 // when user wants to see high scores
@@ -190,14 +184,19 @@ highScoresLink.addEventListener("click", function() {
 submitScoreBtn.addEventListener("click", function(event) {
     event.preventDefault();
 
+    var submittedValue = highScoreInput.value;
+
     // store input & player initials
     var user = {
-        init: highScoreInput.value,
+        init: submittedValue.toUpperCase(),
         score: isCorrect
     }
 
+    highScores.push(user);
+
     // save data to browser
-    localStorage.setItem("users_" + localStorage.length, JSON.stringify(user));
+    localStorage.setItem("users_" + localStorage.length, JSON.stringify(highScores));
+
 
     // load high scores
     loadHighScores();
