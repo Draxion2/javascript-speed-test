@@ -15,6 +15,7 @@ var questionD = document.getElementById("questionD");
 var submitForm = document.getElementById("high-score-form");
 var highScoreInput = document.getElementById("high-score");
 var submitScoreBtn = document.getElementById("submit-score");
+var clearBtn = document.getElementById("clear");
 
 // config numerials
 var questionIndex = 0;
@@ -155,6 +156,7 @@ var ending = function() {
     timerDisplay.textContent = timer;
 
     // change to ending page
+    quizSummary.style.display = "block";
     quizTitle.textContent = "Quiz Completed!";
     quizSummary.textContent = "Your final score is " + isCorrect + ".";
     quizAnswers.style.display = "none";
@@ -166,12 +168,41 @@ var loadHighScores = function() {
 
     // change to high scores page
     header.style.display = "none";
+    result.style.display = "none";
     quizTitle.textContent = "High Scores";
     quizSummary.textContent = "";
     submitForm.style.display = "none";
-    startBtn.style.display = "none";
+    startBtn.style.display = "inline";
+    startBtn.textContent = "Return";
+    clearBtn.style.display = "inline";
     result.style.border = "none";
+
+    // change return button
+    startBtn.setAttribute("id", "return");
+
+    // load high scores
+    for (var i = 0; i < localStorage.length;i++) {
+        console.log(JSON.parse(localStorage.getItem("users_" + i)));
+        var key = localStorage.key(i);
+        var score = JSON.parse(localStorage.getItem(key));
+        var scoreboard = '<div class="scores">' + rank + ". " + score.init + ' - ' + score.score + '</div>';
+        rank++;
+        quizSummary.innerHTML += scoreboard;
+    }
+
+    // return to original page
+    document.getElementById("return").addEventListener("click", function() {
+    
+    // reload the page
+    location.reload();
+});
 }
+
+// clear all high scores
+clearBtn.addEventListener("click", function() {
+    localStorage.clear();
+    loadHighScores();
+})
 
 // when user wants to see high scores
 highScoresLink.addEventListener("click", function() {
@@ -192,10 +223,8 @@ submitScoreBtn.addEventListener("click", function(event) {
         score: isCorrect
     }
 
-    highScores.push(user);
-
     // save data to browser
-    localStorage.setItem("users_" + localStorage.length, JSON.stringify(highScores));
+    localStorage.setItem("users_" + localStorage.length, JSON.stringify(user));
 
 
     // load high scores
